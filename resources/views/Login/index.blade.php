@@ -1,36 +1,15 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            LoginLijst
-        </h2>
-    </x-slot>
+@extends('layouts.navbar')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <p class="flex">Hier komt de loginlijst</p>
+@section('content')
+    <h1>Login Pagina</h1>
+    <form action="{{ route('login') }}" method="POST">
+        @csrf
+        <!-- Voeg hier je login velden toe, bijvoorbeeld: -->
+        <input type="text" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Wachtwoord" required>
+        <button type="submit">Login</button>
+    </form>
 
-                    <table class="border border-black w-full">
-                        <thead>
-                            <tr>
-                                <th class="px-3 py-2 border">User</th>
-                                <th class="px-3 py-2 border">Login Time</th>
-                                <th class="px-3 py-2 border">IP Address</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($logins as $login)
-                                <tr>
-                                    <td class="px-3 py-2 border">{{ $login->user->name }}</td>
-                                    <td class="px-3 py-2 border">{{ $login->login_at }}</td>
-                                    <td class="px-3 py-2 border">{{ $login->ip_address }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout>
+    
+@endsection
+

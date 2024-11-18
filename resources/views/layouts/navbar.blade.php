@@ -25,9 +25,7 @@
                 <li><a href="{{ url('/inschrijven') }}" class="text-white hover:text-gray-900 font-semibold">Inschrijven</a></li>
                 <li><a href="{{ url('/inzetten') }}" class="text-white hover:text-gray-900 font-semibold">Inzetten</a></li>
                 <li><a href="{{ url('/informatie') }}" class="text-white hover:text-gray-900 font-semibold">Info</a></li>
-                <li class="nav-item">
-                    <a href="{{ route('register') }}" class="nav-link btn btn-primary text-white">Register</a>
-                </li>
+
             </ul>
         </nav>
 
@@ -44,12 +42,20 @@
                             Logout
                         </button>
                     </form>
-                @else
-                    <!-- Login knop -->
-                    <a href="/login" class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-gray-200 transition">
-                        Login
-                    </a>
-            @endauth
+                    @else
+                    <!-- Wrapper voor knoppen naast elkaar -->
+                    <div class="flex space-x-2">
+                        <!-- Login knop -->
+                        <a href="/login" class="bg-white text-blue-600 px-3 py-2 rounded-md hover:bg-gray-200 transition text-sm">
+                            Login
+                        </a>
+
+                        <!-- Register knop -->
+                        <a href="/register" class="bg-white text-blue-600 px-3 py-2 rounded-md hover:bg-gray-200 transition text-sm">
+                            Register
+                        </a>
+                    </div>
+                @endauth
         </div>
 
 

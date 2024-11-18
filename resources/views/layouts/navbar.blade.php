@@ -25,12 +25,16 @@
                 <li><a href="{{ url('/inschrijven') }}" class="text-white hover:text-gray-900 font-semibold">Inschrijven</a></li>
                 <li><a href="{{ url('/inzetten') }}" class="text-white hover:text-gray-900 font-semibold">Inzetten</a></li>
                 <li><a href="{{ url('/informatie') }}" class="text-white hover:text-gray-900 font-semibold">Info</a></li>
+                <li class="nav-item">
+                    <a href="{{ route('register') }}" class="nav-link btn btn-primary text-white">Register</a>
+                </li>
             </ul>
         </nav>
 
         <div class="w-1/3 flex justify-end">
             @auth
                     <!-- Welkomstbericht -->
+
                     <span class="text-sm">Dankjewel voor het inloggen, {{ Auth::user()->name }}!</span>
 
                     <!-- Uitlog knop -->

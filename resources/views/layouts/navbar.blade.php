@@ -62,6 +62,9 @@
 
     </header>
     <main>
+        <div class="container mx-auto p-8">
+            @yield('content')  <!-- Dit is waar de inhoud van 'schema.blade.php' komt -->
+        </div>
 
     </main>
 

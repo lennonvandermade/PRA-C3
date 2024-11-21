@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TeamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,11 +49,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-
 require __DIR__.'/auth.php';
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
+Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');  // Dit is de route voor de index
+Route::get('/teams/create', [TeamController::class, 'create'])->name('teams.create');  // Dit is de route voor het formulier
+Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');  // Dit is de route voor het opslaan van het team
+Route::get('/schema', [TeamController::class, 'index'])->name('schema');  // Route naar schema.blade.php
+
+// Toon het formulier om een nieuw team aan te maken
+Route::get('/teams/create', [TeamController::class, 'create'])->name('teams.create');
+
+// Verwerk het formulier om het nieuwe team toe te voegen
+Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');

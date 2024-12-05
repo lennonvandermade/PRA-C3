@@ -65,3 +65,14 @@ Route::get('/teams/create', [TeamController::class, 'create'])->name('teams.crea
 
 // Verwerk het formulier om het nieuwe team toe te voegen
 Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
+
+Route::get('/teams', [TeamController::class, 'index'])->name('teams.edit');  // Dit is de route voor de index
+Route::get('/teams/edit', [TeamController::class, 'edit'])->name('teams.edit');  // Dit is de route voor het formulier
+Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');  // Dit is de route voor het opslaan van het team
+Route::get('/schema', [TeamController::class, 'index'])->name('schema');  // Route naar schema.blade.php
+
+Route::get('/teams/edit', [TeamController::class, 'edit'])->name('teams.edit');
+
+Route::get('/teams/{id}/edit', [TeamController::class, 'edit'])->name('teams.edit');
+
+

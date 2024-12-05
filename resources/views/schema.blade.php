@@ -21,6 +21,7 @@
                     <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b">Teamnaam</th>
                     <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b">Telefoonnummer</th>
                     <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b">Niveau</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 border-b"></th>
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +31,11 @@
                         <td class="px-6 py-4 text-sm text-gray-800 border-b">{{ $team->teamnaam }}</td>
                         <td class="px-6 py-4 text-sm text-gray-800 border-b">{{ $team->telefoonnummer }}</td>
                         <td class="px-6 py-4 text-sm text-gray-800 border-b">{{ $team->niveau }}</td>
-                    </tr>
+                        <td class="px-6 py-4 text-sm text-gray-800 border-b">
+                            <a href="/teams/index"
+                               class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-300">Aanpassen</a>
+                        </td>
+                    </tr> 
                 @endforeach
             </tbody>
         </table>

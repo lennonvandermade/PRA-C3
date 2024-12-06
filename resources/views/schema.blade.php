@@ -34,8 +34,10 @@
                         <td class="px-6 py-4 text-sm text-gray-800 border-b">
                             <a href="/teams/index"
                                class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-300">Aanpassen</a>
+                                <a href="/teams/index"
+                               class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition duration-300">Verwijderen</a>
                         </td>
-                    </tr> 
+                    </tr>
                 @endforeach
             </tbody>
         </table>

@@ -3,38 +3,33 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class LoginController extends Controller
 {
-    // Toon het inlogformulier
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
-    // Verwerk het inlogverzoek
     public function login(Request $request)
     {
-        // Validatie van de invoer
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        // Poging om in te loggen
         if (Auth::attempt($request->only('email', 'password'))) {
-            // Redirect naar dashboard na succesvolle inlog
             return redirect()->intended('/');
         }
 
-        // Foutmelding bij mislukte inlogpoging
         return back()->withErrors([
             'email' => 'De inloggegevens zijn onjuist.',
         ]);
     }
 
-    // Uitlogfunctionaliteit
     public function logout(Request $request)
     {
         Auth::logout();
@@ -42,5 +37,27 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function resetPasswordDirectly(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+
+            Auth::login($user);
+
+            return redirect('/')->with('status', 'Je wachtwoord is succesvol bijgewerkt.');
+        }
+
+        return back()->withErrors(['email' => 'Gebruiker niet gevonden.']);
     }
 }

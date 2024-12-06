@@ -76,3 +76,6 @@ Route::get('/teams/edit', [TeamController::class, 'edit'])->name('teams.edit');
 Route::get('/teams/{id}/edit', [TeamController::class, 'edit'])->name('teams.edit');
 
 
+//Wachtwoord vergeten route
+Route::post('reset-password-direct', [LoginController::class, 'resetPasswordDirectly'])->name('password.direct-reset');
+

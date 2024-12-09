@@ -20,11 +20,11 @@
         <!-- Navigatielinks Gecentreerd -->
         <nav class="container mx-auto mt-8 py-16" style="background-color: #00a0e4;">
             <ul class="flex justify-center space-x-8">
-                <li><a href="{{ url('/') }}" class="text-white hover:text-gray-900 font-semibold">Home</a></li>
-                <li><a href="{{ url('/schema') }}" class="text-white hover:text-gray-900 font-semibold">Schema</a></li>
-                <li><a href="{{ url('/inschrijven') }}" class="text-white hover:text-gray-900 font-semibold">Inschrijven</a></li>
-                <li><a href="{{ url('/inzetten') }}" class="text-white hover:text-gray-900 font-semibold">Inzetten</a></li>
-                <li><a href="{{ url('/informatie') }}" class="text-white hover:text-gray-900 font-semibold">Info</a></li>
+                <li><a href="{{ url('/') }}" class="text-white hover:text-gray-300 font-semibold transition duration-300 transform hover:-translate-y-7">Home</a></li>
+                <li><a href="{{ url('/schema') }}" class="text-white hover:text-gray-300 font-semibold transition duration-300 transform hover:-translate-y-7">Schema</a></li>
+                <li><a href="{{ url('/inschrijven') }}" class="text-white hover:text-gray-300 font-semibold transition duration-300 transform hover:-translate-y-7">Inschrijven</a></li>
+                <li><a href="{{ url('/inzetten') }}" class="text-white hover:text-gray-300 font-semibold transition duration-300 transform hover:-translate-y-7">Inzetten</a></li>
+                <li><a href="{{ url('/informatie') }}" class="text-white hover:text-gray-300 font-semibold transition duration-300 transform hover:-translate-y-7">Info</a></li>
 
             </ul>
         </nav>
@@ -33,7 +33,7 @@
             @auth
                     <!-- Welkomstbericht -->
 
-                    <span class="text-sm">Dankjewel voor het inloggen, {{ Auth::user()->name }}!</span>
+                    <span class="text-white font-semibold text-sm">Dankjewel voor het inloggen, {{ Auth::user()->name }}!</span>
 
                     <!-- Uitlog knop -->
                     <form action="/logout" method="POST" class="ml-4">

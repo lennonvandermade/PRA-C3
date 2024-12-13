@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\InschrijvingController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +28,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/schema', function () {
     return view('schema');
-});
-
+})->name('schema');
 // Route voor Inschrijven
 Route::get('/inschrijven', function () {
     return view('inschrijven');
@@ -68,14 +69,21 @@ Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
 
 Route::get('/teams', [TeamController::class, 'index'])->name('teams.edit');  // Dit is de route voor de index
 Route::get('/teams/edit', [TeamController::class, 'edit'])->name('teams.edit');  // Dit is de route voor het formulier
+Route::delete('/teams/{id}', [TeamController::class, 'destroy'])->name('teams.destroy');//destroy route
 Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');  // Dit is de route voor het opslaan van het team
-Route::get('/schema', [TeamController::class, 'index'])->name('schema');  // Route naar schema.blade.php
+Route::get('/schema', [TeamController::class, 'index'])->name('schema');
 
-Route::get('/teams/edit', [TeamController::class, 'edit'])->name('teams.edit');
+Route::get('/teams/{id}/edit', [TeamController::class, 'edit'])->name('teams.edit');//edit route
+Route::put('/teams/{id}', [TeamController::class, 'update'])->name('teams.update');//edit update
 
-Route::get('/teams/{id}/edit', [TeamController::class, 'edit'])->name('teams.edit');
+
+
+
 
 
 //Wachtwoord vergeten route
 Route::post('reset-password-direct', [LoginController::class, 'resetPasswordDirectly'])->name('password.direct-reset');
 
+//
+Route::get('/inschrijven', [InschrijvingController::class, 'showForm'])->name('inschrijven.form');
+Route::post('/inschrijven', [InschrijvingController::class, 'store'])->name('inschrijven.store');

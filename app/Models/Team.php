@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Team extends Model
 {
     use HasFactory;
@@ -15,4 +16,8 @@ class Team extends Model
         'telefoonnummer',
         'niveau',
     ];
+    public function inschrijvingen()
+    {
+        return $this->hasMany(Inschrijving::class);
+    }
 }

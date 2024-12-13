@@ -32,10 +32,35 @@
                         <td class="px-6 py-4 text-sm text-gray-800 border-b">{{ $team->telefoonnummer }}</td>
                         <td class="px-6 py-4 text-sm text-gray-800 border-b">{{ $team->niveau }}</td>
                         <td class="px-6 py-4 text-sm text-gray-800 border-b">
-                            <a href="/teams/index"
-                               class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-300">Aanpassen</a>
-                                <a href="/teams/index"
-                               class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition duration-300">Verwijderen</a>
+
+                            <div class="flex space-x-4">
+                                <!-- Bewerk Team Button -->
+                                <a href="{{ route('teams.edit', $team->id) }}"
+                                   class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-md transition duration-300 ease-in-out">
+                                    Bewerk Team
+                                </a>
+
+                                <!-- Verwijder Team Button -->
+                                <form action="{{ route('teams.destroy', $team->id) }}" method="POST" onsubmit="return confirm('Weet je zeker dat je dit team wilt verwijderen?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-md transition duration-300 ease-in-out">
+                                        Verwijder Team
+                                    </button>
+                                </form>
+                            </div>
+
+                            </form>
+                            @if (session('success'))
+                                <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+
+
+
                         </td>
                     </tr>
                 @endforeach

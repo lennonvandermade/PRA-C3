@@ -33,7 +33,7 @@
                         <td class="px-6 py-4 text-sm text-gray-800 border-b">{{ $team->niveau }}</td>
                         <td class="px-6 py-4 text-sm text-gray-800 border-b">
 
-                            <div class="flex space-x-4">
+                            <div class="flex space-x-4 mb-6">
                                 <!-- Bewerk Team Button -->
                                 <a href="{{ route('teams.edit', $team->id) }}"
                                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-md transition duration-300 ease-in-out">
@@ -51,12 +51,7 @@
                                 </form>
                             </div>
 
-                            </form>
-                            @if (session('success'))
-                                <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
+                            
 
 
 

@@ -1,6 +1,8 @@
 @extends('layouts.navbar')
 
 @section('content')
+
+
 <div class="grid grid-cols-2 gap-4 p-4 max-w-4xl mx-auto bg-white shadow-md rounded-lg mt-8">
     <p class="col-span-2 text-4xl font-thick bg-white-500 text-black p-6 text-center rounded-lg">Welkom op de Schoolvoetbal site</p>
     <div class="bg-white-500 text-black p-6 text-center rounded-lg">

@@ -86,4 +86,7 @@ Route::post('reset-password-direct', [LoginController::class, 'resetPasswordDire
 
 //
 Route::get('/inschrijven', [InschrijvingController::class, 'showForm'])->name('inschrijven.form');
-Route::post('/inschrijven', [InschrijvingController::class, 'store'])->name('inschrijven.store');
+Route::middleware(['auth'])->group(function () {
+    // Route voor het opslaan van inschrijving (beschermd met middleware 'auth')
+    Route::post('/inschrijven', [InschrijvingController::class, 'store'])->name('inschrijven.store');
+});

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+// API Route voor het ophalen van de class
+ Route::get('/teams', [TeamController::class, 'getAllTeams']);
+//API Route voor het ophalen van specifieke teams
+ Route::get('/teams/{id}', [TeamController::class. 'getTeamsById']);

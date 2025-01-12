@@ -73,4 +73,13 @@ class TeamController extends Controller
 
         return redirect()->back()->with('success', 'Team en gerelateerde inschrijvingen verwijderd!');
     }
+
+    public function getAllTeams()
+    {
+        // Haal alle teams op uit de database
+        $teams = Team::all();  // Gebruik Eloquent om alle teams op te halen
+
+        // Stuur de teams terug als JSON (of als een view als je een frontend hebt)
+        return response()->json($teams);
+    }
 }

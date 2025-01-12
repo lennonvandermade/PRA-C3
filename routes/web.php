@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\InschrijvingController;
-
+use App\Http\Controllers\WedstrijdController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,4 +90,10 @@ Route::middleware(['auth'])->group(function () {
     // Route voor het opslaan van inschrijving (beschermd met middleware 'auth')
     Route::get('/inschrijven', [InschrijvingController::class, 'showForm'])->name('inschrijven.form');
     Route::post('/inschrijven', [InschrijvingController::class, 'store'])->name('inschrijven.store');
+});
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wedstrijden', [WedstrijdController::class, 'index'])->name('wedstrijden.index');
+    Route::post('/wedstrijden/generate', [WedstrijdController::class, 'generateWedstrijden'])->name('wedstrijden.generate');
 });

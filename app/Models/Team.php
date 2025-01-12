@@ -20,4 +20,8 @@ class Team extends Model
     {
         return $this->hasMany(Inschrijving::class);
     }
+    public function wedstrijden()
+    {
+        return $this->hasMany(Wedstrijd::class);
+    }
 }

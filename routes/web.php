@@ -79,7 +79,8 @@ Route::get('/teams/{id}/edit', [TeamController::class, 'edit'])->name('teams.edi
 Route::put('/teams/{id}', [TeamController::class, 'update'])->name('teams.update');//edit update
 
 
-
+//show teams
+Route::get('/team/{id}', [TeamController::class, 'show']);
 
 
 

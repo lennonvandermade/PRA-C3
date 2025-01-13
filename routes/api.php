@@ -19,5 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('teams', [TeamController::class, 'index']);
-Route::get('wedstrijd/{id}', [WedstrijdController::class, 'show']);
+Route::get('teams', [TeamController::class, 'getAllTeams']);
+
+Route::get('/teams/{id}', [TeamController::class, 'getTeamById']);

@@ -8,14 +8,21 @@ use Illuminate\Http\Request;
 class TeamController extends Controller
 {
     // Toon een lijst van alle teams (weergave op schema pagina)
-    public function index()
-    {
-        // Haal alle teams op uit de database
-        $teams = Team::all();
+    public function index(Request $request)
+{
+    // Haal alle teams op uit de database
+    $teams = Team::all();
 
-        // Geef de schema view terug met de teams data
-        return view('schema', compact('teams'));
+    // Controleer of het verzoek om JSON vraagt
+    if ($request->wantsJson()) {
+        // Geef de gegevens als JSON terug
+        return response()->json($teams);
     }
+
+    // Anders geef de view terug
+    return view('schema', compact('teams'));
+}
+
 
     // Toon het formulier om een nieuw team aan te maken
     public function create()
@@ -74,6 +81,19 @@ class TeamController extends Controller
         return redirect()->back()->with('success', 'Team en gerelateerde inschrijvingen verwijderd!');
     }
 
+    public function show($id)
+    {
+        // Haal het team op door zijn ID
+        $team = Team::find($id);
+
+        if ($team) {
+            // Toon de teamnaam
+            return response()->json(['teamnaam' => $team->teamnaam]);
+        }
+
+        return response()->json(['message' => 'Team niet gevonden'], 404);
+    }
+
     public function getAllTeams()
     {
         // Haal alle teams op uit de database
@@ -81,5 +101,14 @@ class TeamController extends Controller
 
         // Stuur de teams terug als JSON (of als een view als je een frontend hebt)
         return response()->json($teams);
+    }
+    public function getTeamById($id){
+        $team = Team::find($id);
+
+        if (!$team) {
+            return response()->json(['error' => 'Team niet gevonden']);
+        }
+
+        return response ()->json($team);
     }
 }

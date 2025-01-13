@@ -25,7 +25,7 @@
                 <li><a href="{{ url('/inschrijven') }}" class="text-white hover:text-gray-300 font-semibold transition duration-300 transform hover:-translate-y-7">Inschrijven</a></li>
                 <li><a href="{{ url('/inzetten') }}" class="text-white hover:text-gray-300 font-semibold transition duration-300 transform hover:-translate-y-7">Inzetten</a></li>
                 <li><a href="{{ url('/informatie') }}" class="text-white hover:text-gray-300 font-semibold transition duration-300 transform hover:-translate-y-7">Info</a></li>
-                <li><a href="{{ route('wedstrijden.index') }}">Wedstrijden</a></li>
+                <li><a href="{{ route('wedstrijden.index') }}" class="text-white hover:text-gray-300 font-semibold transition duration-300 transform hover:-translate-y-7"> Wedstrijden</a></li>
             </ul>
         </nav>
 

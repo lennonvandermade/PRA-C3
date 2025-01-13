@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('team1_id')->constrained('teams')->onDelete('cascade');
             $table->foreignId('team2_id')->constrained('teams')->onDelete('cascade');
-            $table->timestamp('match_date');
+            $table->string('match_date');
             $table->string('location');
             $table->timestamps();
         });

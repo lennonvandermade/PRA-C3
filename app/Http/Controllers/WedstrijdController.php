@@ -1,8 +1,7 @@
 <?php
 
-
 namespace App\Http\Controllers;
-use Carbon\Carbon;
+
 use App\Models\Wedstrijd;
 use App\Models\Team;
 use Illuminate\Http\Request;
@@ -16,14 +15,8 @@ class WedstrijdController extends Controller
         // Haal alle wedstrijden op, inclusief de bijbehorende teams
         $wedstrijden = Wedstrijd::with(['team1', 'team2'])->get();
 
-        // Zet de match_date om naar een Carbon object
-        foreach ($wedstrijden as $wedstrijd) {
-            $wedstrijd->match_date = Carbon::parse($wedstrijd->match_date);
-        }
-
         return view('wedstrijden.index', compact('wedstrijden'));
     }
-
 
     public function generateWedstrijden(Request $request)
     {
@@ -66,13 +59,14 @@ class WedstrijdController extends Controller
 
                 // Alleen een nieuwe wedstrijd maken als deze nog niet bestaat
                 if (!$existingMatch) {
-                    Wedstrijd::create([
-                        'team1_id' => $team1->id,
-                        'team2_id' => $team2->id,
-                        'location' => 'Locatie ' . random_int(1, 10), // Locatie voorbeeld
-                        'match_date' => now()->addDays(random_int(1, 30)), // Toekomstige datum
-                    ]);
+                    // Gebruik de aangepaste methode die een willekeurige dag kiest
+                    Wedstrijd::createWithRandomDay(
+                        $team1->id,
+                        $team2->id,
+                        'Locatie ' . random_int(1, 10) // Locatie voorbeeld
+                    );
                 }
+
             } else {
                 // Log incomplete paren (oneven aantal teams)
                 Log::warning('Onvolledig paar gevonden: minder dan twee teams.', [

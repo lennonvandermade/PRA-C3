@@ -66,7 +66,7 @@
                         </td>
 
                         <!-- Match Date and Location -->
-                        <td class="py-4 px-6">{{ $wedstrijd->match_date->format('Y-m-d H:i:s') }}</td>
+                        <td class="py-4 px-6">{{ $wedstrijd->match_date }}</td>  <!-- Hier tonen we gewoon de string -->
                         <td class="py-4 px-6">{{ $wedstrijd->location }}</td>
                     </tr>
                     @empty

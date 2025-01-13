@@ -9,11 +9,11 @@ class Wedstrijd extends Model
 {
     use HasFactory;
 
-    // Als je tabelnaam niet standaard de meervoudsvorm van je model is,
-    // kun je de naam van de tabel handmatig instellen.
-    protected $table = 'wedstrijden'; // Pas de naam aan indien nodig
+    protected $table = 'wedstrijden';
+
+    // Zorg ervoor dat match_date als string behandeld wordt
     protected $casts = [
-        'match_date' => 'datetime',  // Zorg ervoor dat match_date wordt behandeld als een datetime
+        'match_date' => 'string', // 'match_date' is nu een string
     ];
 
     protected $fillable = [
@@ -32,10 +32,27 @@ class Wedstrijd extends Model
     {
         return $this->belongsTo(Team::class, 'team2_id');
     }
+
     public function inschrijver()
     {
         return $this->belongsTo(Inschrijving::class);
     }
+
+    // Methode om een wedstrijd aan te maken met een willekeurige dag van de week
+    public static function createWithRandomDay($team1_id, $team2_id, $location)
+    {
+        // Definieer de dagen van de week
+        $daysOfWeek = ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
+
+        // Kies een willekeurige dag uit de array
+        $randomDay = $daysOfWeek[array_rand($daysOfWeek)];
+
+        // Maak een nieuwe wedstrijd met de willekeurige dag
+        return self::create([
+            'team1_id' => $team1_id,
+            'team2_id' => $team2_id,
+            'match_date' => $randomDay,  // Bewaar de willekeurige dag
+            'location' => $location,
+        ]);
+    }
 }
-
-

@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\InschrijvingController;
 use App\Http\Controllers\WedstrijdController;
+use App\Http\Controllers\ToernooiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,15 +86,21 @@ Route::put('/teams/{id}', [TeamController::class, 'update'])->name('teams.update
 //Wachtwoord vergeten route
 Route::post('reset-password-direct', [LoginController::class, 'resetPasswordDirectly'])->name('password.direct-reset');
 
-//
+//inschrijf formulier
 Route::middleware(['auth'])->group(function () {
     // Route voor het opslaan van inschrijving (beschermd met middleware 'auth')
     Route::get('/inschrijven', [InschrijvingController::class, 'showForm'])->name('inschrijven.form');
     Route::post('/inschrijven', [InschrijvingController::class, 'store'])->name('inschrijven.store');
 });
 
-
+//Wedstrijden genereren
 Route::middleware(['auth'])->group(function () {
     Route::get('/wedstrijden', [WedstrijdController::class, 'index'])->name('wedstrijden.index');
     Route::post('/wedstrijden/generate', [WedstrijdController::class, 'generateWedstrijden'])->name('wedstrijden.generate');
+});
+
+//Start toernooi
+Route::middleware(['auth'])->group(function (){
+    Route::get('/toernooi/{id}/start', [ToernooiController::class, 'startToernooi'])->name('toernooi.start');
+Route::get('/toernooien', [ToernooiController::class, 'index'])->name('toernooi.index');
 });

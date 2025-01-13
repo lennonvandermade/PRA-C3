@@ -37,6 +37,12 @@ class Wedstrijd extends Model
     {
         return $this->belongsTo(Inschrijving::class);
     }
+    public function toernooi()
+    {
+        return $this->belongsTo(Toernooi::class);
+    }
+
+
 
     // Methode om een wedstrijd aan te maken met een willekeurige dag van de week
     public static function createWithRandomDay($team1_id, $team2_id, $location)

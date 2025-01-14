@@ -17,6 +17,7 @@ class Wedstrijd extends Model
     ];
 
     protected $fillable = [
+        'teamnaam',
         'team1_id',
         'team2_id',
         'match_date',

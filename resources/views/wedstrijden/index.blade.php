@@ -44,40 +44,83 @@
                         <th class="py-3 px-6 text-sm font-medium tracking-wider">Team 2: Naam - Niveau</th>
                         <th class="py-3 px-6 text-sm font-medium tracking-wider">Datum</th>
                         <th class="py-3 px-6 text-sm font-medium tracking-wider">Locatie</th>
+                        <th class="py-3 px-6 text-sm font-medium tracking-wider">Status</th>
+                        <th class="py-3 px-6 text-sm font-medium tracking-wider">Score</th>
+                        <th class="py-3 px-6 text-sm font-medium tracking-wider">Acties</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-700">
                     @forelse($wedstrijden as $wedstrijd)
                     <tr class="hover:bg-gray-50 transition duration-200">
                         <td class="py-4 px-6">{{ $wedstrijd->team1->teamnaam }} - {{ $wedstrijd->team2->teamnaam }}</td>
-
-                        <!-- Team 1 -->
                         <td class="py-4 px-6">
                             <strong>{{ $wedstrijd->team1->teamnaam }}</strong><br>
                             Niveau: {{ $wedstrijd->team1->niveau }}<br>
                             Inschrijver: {{ $wedstrijd->team1->inschrijver_naam ?? 'Niet beschikbaar' }}
                         </td>
-
-                        <!-- Team 2 -->
                         <td class="py-4 px-6">
                             <strong>{{ $wedstrijd->team2->teamnaam }}</strong><br>
                             Niveau: {{ $wedstrijd->team2->niveau }}<br>
                             Inschrijver: {{ $wedstrijd->team2->inschrijver_naam ?? 'Niet beschikbaar' }}
                         </td>
-
-                        <!-- Match Date and Location -->
-                        <td class="py-4 px-6">{{ $wedstrijd->match_date }}</td>  <!-- Hier tonen we gewoon de string -->
+                        <td class="py-4 px-6">{{ $wedstrijd->match_date }}</td>
                         <td class="py-4 px-6">{{ $wedstrijd->location }}</td>
+                        <td class="py-4 px-6">
+                            @if($wedstrijd->status == 'Wedstrijd Bezig')
+                                <span class="text-green-600 font-bold">{{ $wedstrijd->status }}</span>
+                            @else
+                                <span class="text-yellow-500 font-bold">Wacht op start</span>
+                            @endif
+                        </td>
+                        <td class="py-4 px-6">
+                            <!-- Als de wedstrijd nog niet gestart is, toon '-' als score -->
+                            @if($wedstrijd->status != 'Wedstrijd Bezig')
+                                <span>-</span>
+                            @else
+                                <!-- Als de wedstrijd bezig is, toon de score -->
+                                {{ $wedstrijd->score_team1 }} - {{ $wedstrijd->score_team2 }}
+                            @endif
+                        </td>
+                        <td class="py-4 px-6">
+                            @if($wedstrijd->status != 'Wedstrijd Bezig')
+                                <form action="{{ route('wedstrijden.start', $wedstrijd->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                        Start Wedstrijd
+                                    </button>
+                                </form>
+                                <td class="py-4 px-6">
+                                    @if($wedstrijd->status == 'Wedstrijd Bezig')
+                                    <form action="{{ route('wedstrijden.stop', $wedstrijd->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                            Stop Wedstrijd
+                                        </button>
+                                    </form>
+                                    @endif
+                                </td>
+                            @else
+                                <span class="text-green-500">Wedstrijd Bezig</span>
+                            @endif
+                        </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="text-center py-4 px-6 text-gray-500">Geen wedstrijden beschikbaar</td>
+                        <td colspan="8" class="text-center py-4 px-6 text-gray-500">Geen wedstrijden beschikbaar</td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
+
+    <form action="{{ route('toernooi.start') }}" method="POST" class="mb-6">
+        @csrf
+        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none">
+            Start Toernooi
+        </button>
+    </form>
+    
 
 </body>
 </html>

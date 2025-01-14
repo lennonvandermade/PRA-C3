@@ -6,7 +6,6 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\InschrijvingController;
 use App\Http\Controllers\WedstrijdController;
-use App\Http\Controllers\ToernooiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,10 +97,10 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/wedstrijden', [WedstrijdController::class, 'index'])->name('wedstrijden.index');
     Route::post('/wedstrijden/generate', [WedstrijdController::class, 'generateWedstrijden'])->name('wedstrijden.generate');
+    Route::post('/wedstrijden/{id}/start', [WedstrijdController::class, 'startWedstrijd'])->name('wedstrijden.start');
+    Route::post('/start-toernooi', [WedstrijdController::class, 'startToernooi'])->name('toernooi.start');
+
+    Route::post('/stop-wedstrijd/{id}', [WedstrijdController::class, 'stopWedstrijd'])->name('wedstrijden.stop');
+Route::post('/stop-toernooi', [WedstrijdController::class, 'stopToernooi'])->name('toernooi.stop');
 });
 
-//Start toernooi
-Route::middleware(['auth'])->group(function (){
-    Route::get('/toernooi/{id}/start', [ToernooiController::class, 'startToernooi'])->name('toernooi.start');
-Route::get('/toernooien', [ToernooiController::class, 'index'])->name('toernooi.index');
-});

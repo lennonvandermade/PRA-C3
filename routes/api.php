@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\WedstrijdController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('teams', [TeamController::class, 'getAllTeams']);
 
 Route::get('/teams/{id}', [TeamController::class, 'getTeamById']);
+
+Route::get('/wedstrijden', [WedstrijdController::class, 'getAllWedstrijden']);
+
+Route::get('/wedstrijden/{id}', [WedstrijdController::class, 'getWedstrijdById']);

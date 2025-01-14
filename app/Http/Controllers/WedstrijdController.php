@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Wedstrijd;
@@ -77,4 +76,119 @@ class WedstrijdController extends Controller
 
         return redirect()->route('wedstrijden.index')->with('success', 'Wedstrijden succesvol gegenereerd.');
     }
+
+    // Functie om een wedstrijd te starten
+    public function startWedstrijd($id)
+    {
+        // Haal de wedstrijd op
+        $wedstrijd = Wedstrijd::find($id);
+
+        // Controleer of de wedstrijd bestaat
+        if (!$wedstrijd) {
+            return redirect()->route('wedstrijden.index')->with('error', 'Wedstrijd niet gevonden.');
+        }
+
+        // Zet de status van de wedstrijd op "Wedstrijd Bezig"
+        $wedstrijd->status = 'Wedstrijd Bezig';
+
+        // Zet de score van beide teams naar 0
+        $wedstrijd->score_team1 = 0;
+        $wedstrijd->score_team2 = 0;
+
+        // Sla de wijzigingen op
+        $wedstrijd->save();
+
+        // Retourneer naar de wedstrijden lijst met een succesmelding
+        return redirect()->route('wedstrijden.index');
+    }
+
+    public function stopWedstrijd($id)
+    {
+        // Haal de wedstrijd op
+        $wedstrijd = Wedstrijd::find($id);
+
+        if (!$wedstrijd) {
+            return redirect()->route('wedstrijden.index')->with('error', 'Wedstrijd niet gevonden.');
+        }
+
+        // Zet de status van de wedstrijd terug naar "Wacht op start"
+        $wedstrijd->status = 'Wacht op start';
+        $wedstrijd->score_team1 = 0; // Zet de score van team 1 naar 0
+        $wedstrijd->score_team2 = 0; // Zet de score van team 2 naar 0
+        $wedstrijd->save();
+
+        return redirect()->route('wedstrijden.index')->with('success', 'Wedstrijd gestopt en status gereset.');
+    }
+
+    public function getAllWedstrijden()
+    {
+        // Haal alle teams op uit de database
+        $wedstrijden = Wedstrijd::all();  // Gebruik Eloquent om alle teams op te halen
+
+        // Stuur de teams terug als JSON (of als een view als je een frontend hebt)
+        return response()->json($wedstrijden);
+    }
+
+    public function getWedstrijdById($id){
+        $wedstrijd = Wedstrijd::find($id);
+
+        if (!$wedstrijd) {
+            return response()->json(['error' => 'Team niet gevonden']);
+        }
+
+        return response()->json($wedstrijd);
+    }
+
+    public function startToernooi(Request $request)
+    {
+        // Haal alle teams op
+        $teams = Team::all();
+
+        if ($teams->count() < 2) {
+            return redirect()->route('wedstrijden.index')->with('error', 'Niet genoeg teams voor het toernooi.');
+        }
+
+        // Shuffle de teams om willekeurige tegenstanders te genereren
+        $shuffledTeams = $teams->shuffle();
+
+        // Maak een array om de wedstrijden op te slaan
+        $wedstrijden = [];
+
+        // Verdeel de teams in paren en maak wedstrijden
+        for ($i = 0; $i < $shuffledTeams->count(); $i += 2) {
+            if (isset($shuffledTeams[$i + 1])) {
+                $wedstrijd = Wedstrijd::create([
+                    'team1_id' => $shuffledTeams[$i]->id,
+                    'team2_id' => $shuffledTeams[$i + 1]->id,
+                    'status' => 'Wacht op start',  // Status is "Wacht op start" bij toernooistart
+                    'score_team1' => 0,
+                    'score_team2' => 0,
+                    'match_date' => now()->addDays(1), // Je kunt hier de datum aanpassen voor je schema
+                    'location' => 'Locatie ' . random_int(1, 10),  // Locatie instellen (kan worden aangepast)
+                ]);
+                $wedstrijden[] = $wedstrijd;
+            }
+        }
+
+        // Return naar de wedstrijden index met een succesmelding
+        return redirect()->route('wedstrijden.index')->with('success', 'Toernooi gestart, wedstrijden zijn aangemaakt.');
+    }
+
+    public function stopToernooi()
+    {
+        // Haal alle wedstrijden op die tijdens het toernooi zijn aangemaakt
+        $wedstrijden = Wedstrijd::all();  // Je kunt dit ook filteren op een specifieke toernooi_id
+
+        // Zet de toernooi_status op 'gestopt' voor alle wedstrijden
+        foreach ($wedstrijden as $wedstrijd) {
+            $wedstrijd->status = 'Wacht op start';
+            $wedstrijd->score_team1 = 0;
+            $wedstrijd->score_team2 = 0;
+            $wedstrijd->toernooi_status = 'gestopt'; // Zet de toernooi_status naar gestopt
+            $wedstrijd->save();
+        }
+
+        return redirect()->route('wedstrijden.index')->with('success', 'Toernooi gestopt en alle wedstrijden gereset.');
+    }
+
 }
